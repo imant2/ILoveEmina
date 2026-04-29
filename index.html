@@ -12,17 +12,27 @@
       }
       
       .scene {
-        position: relative;
-        width: 100vw;
-        height: 100svh;
-        overflow: hidden;
-        background: #000;
-      }
-      
-      /* cijela animacija će se skalirati prema ekranu */
-      #ui {
-        --size: min(90vw, 90svh, 420px);
-      }
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+}
+
+#ui {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 450px;
+  height: 450px;
+  transform: translate(-50%, -50%) scale(0.75);
+  transform-origin: center;
+}
+
+@media (max-width: 480px) {
+  #ui {
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+}
       
       #ui .love {
         position: absolute;
