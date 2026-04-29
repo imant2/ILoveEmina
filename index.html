@@ -2,23 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VTP Emina</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
+    html, body {
       margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background: #000;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      overflow: hidden;
     }
 
-    .scene {
+    body {
       position: relative;
-      width: 100vw;
-      height: 100vh;
-      height: 100svh;
-      overflow: hidden;
-      background: #000;
     }
 
     #ui {
@@ -27,7 +24,6 @@
       left: 50%;
       width: 450px;
       height: 450px;
-      transform: translate(-50%, -50%) scale(1);
       transform-origin: center center;
     }
 
@@ -39,29 +35,23 @@
       --i: 1;
     }
 
-    #ui .love:last-child .love_word {
-      color: #ea80b0;
-      font-size: 1.4rem;
-      text-shadow: 0 0 10px #fff;
-    }
-
     #ui .love_word {
       color: #ea80b0;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       transform: translateY(-100%) rotateZ(-30deg);
       text-shadow: 0 0 10px #fff;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
       white-space: nowrap;
     }
 
     #ui .love_horizontal {
       animation: horizontal 10000ms infinite alternate ease-in-out;
-      animation-delay: calc(var(--i) * -300ms);
+      animation-delay: calc(var(--i) * -250ms);
     }
 
     #ui .love_vertical {
       animation: vertical 20000ms infinite linear;
-      animation-delay: calc(var(--i) * -300ms);
+      animation-delay: calc(var(--i) * -250ms);
     }
 
     @keyframes horizontal {
@@ -92,46 +82,25 @@
       79%  { transform: translateY(428.57143px); }
       100% { transform: translateY(180px); }
     }
-
-    @media (max-width: 768px) {
-      #ui {
-        transform: translate(-50%, -50%) scale(0.72);
-      }
-    }
-
-    @media (max-width: 480px) {
-      #ui {
-        transform: translate(-50%, -50%) scale(0.52);
-      }
-
-      #ui .love_word,
-      #ui .love:last-child .love_word {
-        font-size: 1rem;
-        letter-spacing: 1px;
-      }
-    }
-
-    @media (max-width: 360px) {
-      #ui {
-        transform: translate(-50%, -50%) scale(0.44);
-      }
-
-      #ui .love_word,
-      #ui .love:last-child .love_word {
-        font-size: 0.9rem;
-        letter-spacing: 0.5px;
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="scene">
-    <div id="ui"></div>
-  </div>
+  <div id="ui"></div>
 
   <script>
-    const N = 100;
+    const N = 80;
     const ui = document.getElementById("ui");
+
+    function placeUI() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      const scaleX = (w * 0.92) / 450;
+      const scaleY = (h * 0.92) / 450;
+      const scale = Math.min(scaleX, scaleY, 1);
+
+      ui.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
 
     for (let i = 1; i <= N; i++) {
       const love = document.createElement("div");
@@ -153,6 +122,9 @@
       love.appendChild(h);
       ui.appendChild(love);
     }
+
+    placeUI();
+    window.addEventListener("resize", placeUI);
   </script>
 </body>
 </html>
